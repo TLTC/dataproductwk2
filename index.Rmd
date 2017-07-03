@@ -1,0 +1,40 @@
+---
+title: "Data Product Wk2 Project"
+author: "TLTC"
+date: "July 3, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Custom Icons with Links
+
+```{r, echo=FALSE, message=FALSE}
+library(leaflet)
+
+LatLong <- data.frame(
+  lat = c(40.682456,40.750594),
+  lng = c(-73.974733,-73.992516),
+  chk=c(0,1))
+
+teamIcons <- icons(
+  iconUrl = ifelse(LatLong$chk==0,
+    "http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png",
+    "http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/nyk.png"
+  ),
+  iconWidth = 78*215/230, iconHeight = 78,
+  iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+
+teamSites <- c(
+  "<a href='http://www.nba.com/nets/'>Nets</a>",
+  "<a href='http://www.nba.com/knicks/'>Knicks</a>"
+)
+
+LatLong %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = teamIcons,popup=teamSites)
+```
